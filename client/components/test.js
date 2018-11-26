@@ -16,14 +16,9 @@ class addStock extends Component {
     evt.preventDefault();
     const name = evt.target.name;
     const value = evt.target.value;
-    this.setState(
-      {
-        [name]: value
-      },
-      () => {
-        console.log(this.state);
-      }
-    );
+    this.setState({
+      [name]: value
+    });
   }
   handleSubmit(evt) {
     evt.preventDefault();
@@ -42,7 +37,7 @@ class addStock extends Component {
           <label htmlFor="Stock">
             <small>Stock</small>
           </label>
-          <input name="stock" type="text" onChange={this.handleChange} />
+          <input name="stock" type="text" />
           <button type="submit">Buy</button>
         </form>
       </div>
@@ -61,6 +56,9 @@ const mapDispatch = dispatch => {
   return {
     async handleSubmit(evt, amount, stock, id) {
       evt.preventDefault();
+      console.log(evt.target);
+      console.log(amount);
+      console.log(id);
       const stockPurchase = await axios.post("/api/stock/get", {
         amount,
         stock,
@@ -71,3 +69,53 @@ const mapDispatch = dispatch => {
   };
 };
 export default connect(mapState, mapDispatch)(addStock);
+
+/*
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import axios from "axios";
+
+const addStock = props => {
+  const { handleSubmit } = props;
+  return (
+    <div>
+      <form onSubmit={handleSubmit} name="stock">
+        <label htmlFor="Amount">
+          <small>Amount</small>
+        </label>
+        <input name="amount" type="number" />
+        <label htmlFor="Stock">
+          <small>Stock</small>
+        </label>
+        <input name="stock" type="text" />
+        <button type="submit">Buy</button>
+      </form>
+    </div>
+  );
+};
+
+const mapState = state => {
+  return {
+    state: state,
+    id: state.id
+  };
+};
+
+const mapDispatch = dispatch => {
+  return {
+    async handleSubmit(evt) {
+      evt.preventDefault();
+      console.log(evt.target);
+      console.log(this);
+      const amount = evt.target.amount;
+      // const id = this.props.state.user.id;
+      const stock = evt.target.stock;
+      console.log(amount);
+      const stockPurchase = await axios.post("/api/stock/get", {});
+      console.log(stockPurchase);
+    }
+  };
+};
+export default connect(mapState, mapDispatch)(addStock);
+
+*/

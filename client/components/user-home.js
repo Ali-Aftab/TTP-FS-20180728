@@ -4,10 +4,6 @@ import { connect } from "react-redux";
 import axios from "axios";
 import AddStock from "./addStock";
 
-/**
- * COMPONENT
- */
-
 export class UserHome extends Component {
   constructor(props) {
     super(props);
@@ -16,41 +12,23 @@ export class UserHome extends Component {
     const userStock = axios("/stock");
   }
   render() {
-    const { email } = this.props;
+    const { firstName } = this.props;
 
     return (
       <div>
-        <h3>Welcome, {email}</h3>
+        <h3>Welcome, {firstName}</h3>
         <AddStock props={this.props} />
       </div>
     );
   }
 }
 
-// export const UserHome = props => {
-//   const {email} = props
-//   console.log(props)
-//   return (
-//     <div>
-//       <h3>Welcome, {email}</h3>
-//     </div>
-//   )
-// }
-
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    user: state.user,
+    firstName: state.user.firstName
   };
 };
 
 export default connect(mapState)(UserHome);
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-};
