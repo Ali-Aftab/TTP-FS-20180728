@@ -21,7 +21,7 @@ export class UserHome extends Component {
     return (
       <div>
         <h3>Welcome, {email}</h3>
-        <AddStock />
+        <AddStock props={this.props} />
       </div>
     );
   }

@@ -1,9 +1,10 @@
 const router = require("express").Router();
 module.exports = router;
 
-router.get("/", async (req, res, next) => {
+router.post("/get", (req, res, next) => {
   try {
-    res.json({ hi: "hi" });
+    console.log(req.body);
+    res.json({ hi: "hihihi" });
   } catch (err) {
     next(err);
   }
