@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Stock } = require("../db/models");
+const { User, Stock, Transaction } = require("../db/models");
 const request = require("request");
 const urlIEX = "https://api.iextrading.com/1.0";
 
@@ -21,7 +21,6 @@ router.post("/get", async (req, res, next) => {
         const total = price * amount;
         if (total < user.cash) {
           const difference = user.cash - total;
-          console.log(difference);
           const update = await User.update(
             { cash: difference },
             {
@@ -30,6 +29,28 @@ router.post("/get", async (req, res, next) => {
               }
             }
           );
+          const newTransaction = await Transaction.create({
+            name: req.body.stock,
+            price,
+            amount,
+            exchange: "buy",
+            userId: req.body.id
+          });
+          console.log("newT", newTransaction);
+          const purchasedStock = await Stock.findOne({
+            where: { userId: req.body.id, name: req.body.stock }
+          });
+          if (purchasedStock === null) {
+            const newStock = await Stock.create({
+              name: req.body.stock,
+              price,
+              amount,
+              userId: req.body.id
+            });
+            console.log("NEW", newStock);
+          } else {
+            console.log("hi");
+          }
         }
         res.json({ price: body });
 
