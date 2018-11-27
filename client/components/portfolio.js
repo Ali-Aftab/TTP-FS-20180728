@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllStock } from "../store";
+import { getAllStock, buyNewStock } from "../store";
 import axios from "axios";
 
 class Portfolio extends Component {
@@ -40,9 +40,8 @@ class Portfolio extends Component {
       this.props.state.user.id
     );
     if (result.data) {
-      const newBudget = this.state.cash - Number(result.data.cash);
       this.setState({
-        cash: newBudget
+        cash: result.data.cash
       });
     }
   }
@@ -80,11 +79,7 @@ const mapDispatch = dispatch => {
   return {
     async handleSubmit(evt, amount, stock, id) {
       evt.preventDefault();
-      const stockPurchase = await axios.post("/api/stock/buy", {
-        amount,
-        stock,
-        id
-      });
+      dispatch(buyNewStock(amount, stock, id));
     },
     getStock: id => dispatch(getAllStock(id))
   };

@@ -74,7 +74,13 @@ router.post("/buy", async (req, res, next) => {
               }
             );
           }
-          res.json({ price: body, cash: update.cash });
+          const userInfo = await User.findOne({
+            where: {
+              id: user.id
+            }
+          });
+          console.log(userInfo);
+          res.json({ price: body, cash: userInfo.cash });
         } else {
           res.json({ message: "You do not have enough funds" });
         }

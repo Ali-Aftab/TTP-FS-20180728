@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { login, auth } from "../store";
 
 const AuthForm = props => {
+  console.log(props);
   const { name, displayName, handleSubmit, error } = props;
   return (
     <div>

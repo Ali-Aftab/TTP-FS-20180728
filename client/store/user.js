@@ -13,6 +13,7 @@ const BUY_STOCK = "BUY_STOCK";
  * INITIAL STATE
  */
 const defaultUser = {
+  userInfo: {},
   stock: []
 };
 
@@ -37,11 +38,12 @@ export const me = () => async dispatch => {
 };
 export const buyNewStock = (amount, stock, id) => async dispatch => {
   try {
-    const res = await axios.post("/api/stock/get", {
+    const res = await axios.post("/api/stock/buy", {
       amount,
       stock,
       id
     });
+    dispatch(buyStock(res.data));
   } catch (error) {
     console.error(error);
   }
@@ -117,13 +119,13 @@ export const logout = () => async dispatch => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      return action.user;
+      return { ...action.user };
     case REMOVE_USER:
       return defaultUser;
     case GET_STOCK:
       return { ...state, stock: action.data };
     case BUY_STOCK:
-      return { ...state };
+      return { ...state, cash: action.data.cash };
     default:
       return state;
   }
