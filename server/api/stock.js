@@ -23,6 +23,7 @@ router.get("/transactions/:id", async (req, res, next) => {
         userId: req.params.id
       }
     });
+    // console.log(allTransactions);
     res.json(allTransactions);
   } catch (error) {
     next(error);

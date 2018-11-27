@@ -77,7 +77,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    async handleSubmit(evt, amount, stock, id) {
+    handleSubmit(evt, amount, stock, id) {
       evt.preventDefault();
       dispatch(buyNewStock(amount, stock, id));
     },
