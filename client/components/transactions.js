@@ -11,7 +11,6 @@ class Transactions extends Component {
   }
   componentDidMount() {
     const transactions = this.props.getTransactions(this.props.id);
-    // console.log(transactions);
   }
   render() {
     let cash = 0;
@@ -19,7 +18,12 @@ class Transactions extends Component {
       cash = this.props.state.user.cash;
     }
     console.log(this);
-    return <h1>Hi</h1>;
+    return (
+      <React.Fragment>
+        {" "}
+        <h1>Transactions</h1>
+      </React.Fragment>
+    );
   }
 }
 
