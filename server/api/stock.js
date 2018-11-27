@@ -3,7 +3,7 @@ const { User, Stock, Transaction } = require("../db/models");
 const request = require("request");
 const urlIEX = "https://api.iextrading.com/1.0";
 
-router.get("/allPurchased/:id", async (req, res, next) => {
+router.get("/all/:id", async (req, res, next) => {
   try {
     const allStocks = await Stock.findAll({
       where: {

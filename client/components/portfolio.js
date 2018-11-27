@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { getAllStock } from "../store";
 import axios from "axios";
 
-class addStock extends Component {
+class Portfolio extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,6 +13,9 @@ class addStock extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentDidMount() {
+    this.props.getStock(this.props.state.user.id);
   }
   handleChange(evt) {
     evt.preventDefault();
@@ -36,8 +40,9 @@ class addStock extends Component {
       this.props.state.user.id
     );
     if (result.data) {
+      const newBudget = this.state.cash - Number(result.data.cash);
       this.setState({
-        cash: result.data.cash
+        cash: newBudget
       });
     }
   }
@@ -80,8 +85,8 @@ const mapDispatch = dispatch => {
         stock,
         id
       });
-      console.log(stockPurchase);
-    }
+    },
+    getStock: id => dispatch(getAllStock(id))
   };
 };
-export default connect(mapState, mapDispatch)(addStock);
+export default connect(mapState, mapDispatch)(Portfolio);

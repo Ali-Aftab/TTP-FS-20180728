@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import axios from "axios";
-import AddStock from "./addStock";
+import Portfolio from "./portfolio";
 
 export class UserHome extends Component {
   constructor(props) {
@@ -17,7 +16,7 @@ export class UserHome extends Component {
     return (
       <div>
         <h3>Welcome, {firstName}</h3>
-        <AddStock props={this.props} />
+        <Portfolio props={this.props} />
       </div>
     );
   }
