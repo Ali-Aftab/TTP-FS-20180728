@@ -7,7 +7,8 @@ class addStock extends Component {
     super(props);
     this.state = {
       amount: 0,
-      stock: ""
+      stock: "",
+      cash: props.state.user.cash
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,12 +29,24 @@ class addStock extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
     const { amount, stock } = this.state;
-    this.props.handleSubmit(evt, amount, stock, this.props.state.user.id);
+    const result = this.props.handleSubmit(
+      evt,
+      amount,
+      stock,
+      this.props.state.user.id
+    );
+    if (result.data) {
+      this.setState({
+        cash: result.data.cash
+      });
+    }
   }
 
   render() {
+    console.log(this.state);
     return (
       <div>
+        <h1>You have ${this.state.cash}</h1>
         <form onSubmit={this.handleSubmit} name="stock">
           <label htmlFor="Amount">
             <small>Amount</small>
@@ -53,7 +66,8 @@ class addStock extends Component {
 const mapState = state => {
   return {
     state: state,
-    id: state.id
+    id: state.id,
+    cash: state.user.cash
   };
 };
 

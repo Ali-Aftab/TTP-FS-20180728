@@ -29,6 +29,7 @@ class addStock extends Component {
   render() {
     return (
       <div>
+        <h1>You have ${this.props.state.cash}</h1>
         <form onSubmit={this.handleSubmit} name="stock">
           <label htmlFor="Amount">
             <small>Amount</small>
@@ -48,7 +49,8 @@ class addStock extends Component {
 const mapState = state => {
   return {
     state: state,
-    id: state.id
+    id: state.id,
+    cash: state.cash
   };
 };
 

@@ -5,7 +5,6 @@ const urlIEX = "https://api.iextrading.com/1.0";
 
 router.post("/get", async (req, res, next) => {
   try {
-    console.log(req.body);
     const oneStock = urlIEX + "/stock/" + req.body.stock + "/price";
     const user = await User.findOne({
       where: {
@@ -36,7 +35,6 @@ router.post("/get", async (req, res, next) => {
             exchange: "buy",
             userId: req.body.id
           });
-          console.log("newT", newTransaction);
           const purchasedStock = await Stock.findOne({
             where: { userId: req.body.id, name: req.body.stock }
           });
@@ -47,15 +45,26 @@ router.post("/get", async (req, res, next) => {
               amount,
               userId: req.body.id
             });
-            console.log("NEW", newStock);
           } else {
-            console.log("hi");
+            const newSum = Number(purchasedStock.amount) + Number(amount);
+            const newPrice =
+              (Number(purchasedStock.price) * Number(purchasedStock.amount) +
+                Number(price) * Number(amount)) /
+              (Number(purchasedStock.amount) + Number(amount));
+            const updateStock = await Stock.update(
+              { amount: newSum, price: newPrice },
+              {
+                where: {
+                  name: req.body.stock,
+                  userId: req.body.id
+                }
+              }
+            );
           }
+          res.json({ price: body, cash: update.cash });
+        } else {
+          res.json({ message: "You do not have enough funds" });
         }
-        res.json({ price: body });
-
-        // console.log("response", response);
-        // console.log("body", body);
       }
     });
     // res.json({ hi: "hi" });
