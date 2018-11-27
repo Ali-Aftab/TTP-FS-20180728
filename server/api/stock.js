@@ -16,6 +16,19 @@ router.get("/all/:id", async (req, res, next) => {
   }
 });
 
+router.get("/transactions/:id", async (req, res, next) => {
+  try {
+    const allTransactions = await Transaction.findAll({
+      where: {
+        userId: req.params.id
+      }
+    });
+    res.json(allTransactions);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post("/buy", async (req, res, next) => {
   try {
     const oneStock = urlIEX + "/stock/" + req.body.stock + "/price";
