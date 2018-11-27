@@ -7,6 +7,7 @@ import history from "../history";
 const GET_USER = "GET_USER";
 const REMOVE_USER = "REMOVE_USER";
 const GET_STOCK = "GET_STOCK";
+const BUY_STOCK = "BUY_STOCK";
 
 /**
  * INITIAL STATE
@@ -21,6 +22,7 @@ const defaultUser = {
 const getStock = data => ({ type: GET_STOCK, data });
 const getUser = user => ({ type: GET_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
+const buyStock = data => ({ type: BUY_STOCK, data });
 
 /**
  * THUNK CREATORS
@@ -31,6 +33,26 @@ export const me = () => async dispatch => {
     dispatch(getUser(res.data || defaultUser));
   } catch (err) {
     console.error(err);
+  }
+};
+export const buyNewStock = (amount, stock, id) => async dispatch => {
+  try {
+    const res = await axios.post("/api/stock/get", {
+      amount,
+      stock,
+      id
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getAllStock = userId => async dispatch => {
+  try {
+    const res = await axios(`/api/stock/all/${userId}`);
+    dispatch(getStock(res.data));
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -100,6 +122,8 @@ export default function(state = defaultUser, action) {
       return defaultUser;
     case GET_STOCK:
       return { ...state, stock: action.data };
+    case BUY_STOCK:
+      return { ...state };
     default:
       return state;
   }

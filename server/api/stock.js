@@ -3,7 +3,20 @@ const { User, Stock, Transaction } = require("../db/models");
 const request = require("request");
 const urlIEX = "https://api.iextrading.com/1.0";
 
-router.post("/get", async (req, res, next) => {
+router.get("/allPurchased/:id", async (req, res, next) => {
+  try {
+    const allStocks = await Stock.findAll({
+      where: {
+        userId: req.params.id
+      }
+    });
+    res.json(allStocks);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/buy", async (req, res, next) => {
   try {
     const oneStock = urlIEX + "/stock/" + req.body.stock + "/price";
     const user = await User.findOne({

@@ -75,7 +75,7 @@ const mapDispatch = dispatch => {
   return {
     async handleSubmit(evt, amount, stock, id) {
       evt.preventDefault();
-      const stockPurchase = await axios.post("/api/stock/get", {
+      const stockPurchase = await axios.post("/api/stock/buy", {
         amount,
         stock,
         id
