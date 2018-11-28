@@ -22,7 +22,7 @@ form div {
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
-  width: 100%;
+  width: 50%;
 }
 
 td,
@@ -34,4 +34,12 @@ th {
 
 tr:nth-child(even) {
   background-color: #dddddd;
+}
+.floatleft {
+  float: left;
+  width: 50%;
+}
+.floatright {
+  float: right;
+  width: 50%;
 }

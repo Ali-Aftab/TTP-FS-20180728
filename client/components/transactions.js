@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { allTransactions } from "../store";
+import Moment from "react-moment";
 
 // import Table from "material-ui/Table";
 // import TableBody from "material-ui/TableBody";
@@ -33,6 +34,7 @@ class Transactions extends Component {
             <th>Name</th>
             <th>Shares</th>
             <th>Price per Stock</th>
+            <th>Date</th>
           </tr>
           {this.props.transactions
             ? this.props.transactions.map(t => {
@@ -41,6 +43,9 @@ class Transactions extends Component {
                     <th>{t.name}</th>
                     <th>{t.amount}</th>
                     <th>{t.price}</th>
+                    <th>
+                      <Moment date={t.date} format="MM-DD-YYYY -- HH:mm" />
+                    </th>
                   </tr>
                 );
               })

@@ -15,7 +15,7 @@ export class UserHome extends Component {
 
     return (
       <div>
-        <h3>Welcome, {firstName}</h3>
+        <h1>Welcome {firstName}!</h1>
         <Portfolio props={this.props} />
       </div>
     );

@@ -49,20 +49,26 @@ class Portfolio extends Component {
   render() {
     console.log(this.state);
     return (
-      <div>
-        <h1>You have ${this.state.cash}</h1>
-        <form onSubmit={this.handleSubmit} name="stock">
-          <label htmlFor="Amount">
-            <small>Amount</small>
-          </label>
-          <input name="amount" type="number" onChange={this.handleChange} />
-          <label htmlFor="Stock">
-            <small>Stock</small>
-          </label>
-          <input name="stock" type="text" onChange={this.handleChange} />
-          <button type="submit">Buy</button>
-        </form>
-      </div>
+      <React.Fragment>
+        <div className="floatleft">
+          <h2>Test</h2>
+        </div>
+        <div className="floatright">
+          <h2>You have ${this.state.cash} in cash!</h2>
+          <form onSubmit={this.handleSubmit} name="stock">
+            <label htmlFor="Amount">
+              <small>Amount</small>
+            </label>
+            <input name="amount" type="number" onChange={this.handleChange} />
+            <label htmlFor="Stock">
+              <small>Stock</small>
+            </label>
+            <br />
+            <input name="stock" type="text" onChange={this.handleChange} />
+            <button type="submit">Buy</button>
+          </form>
+        </div>
+      </React.Fragment>
     );
   }
 }
