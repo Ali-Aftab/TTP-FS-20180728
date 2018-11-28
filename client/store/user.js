@@ -9,13 +9,15 @@ const REMOVE_USER = "REMOVE_USER";
 const GET_STOCK = "GET_STOCK";
 const BUY_STOCK = "BUY_STOCK";
 const ALL_TRANSACTION = "ALL_TRANSACTION";
+const GET_COMPANIES = "GET_COMPANIES";
 /**
  * INITIAL STATE
  */
 const defaultUser = {
   userInfo: {},
   stock: [],
-  transactions: []
+  transactions: [],
+  companies: []
 };
 
 /**
@@ -26,6 +28,7 @@ const getUser = user => ({ type: GET_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
 const buyStock = data => ({ type: BUY_STOCK, data });
 const allTransaction = data => ({ type: ALL_TRANSACTION, data });
+const addCompanies = data => ({ type: GET_COMPANIES, data });
 
 /**
  * THUNK CREATORS
@@ -55,6 +58,15 @@ export const getAllStock = userId => async dispatch => {
   try {
     const res = await axios(`/api/stock/all/${userId}`);
     dispatch(getStock(res.data));
+    let companies = [];
+    for (let i = 0; i < res.data.length; i++) {
+      const oneStock = res.data[i];
+      companies.push(oneStock.name);
+    }
+    const stockPortfolio = await axios.post(`/api/stock/info/`, {
+      companies: companies
+    });
+    dispatch(addCompanies(stockPortfolio.data));
   } catch (error) {
     console.error(error);
   }
@@ -137,6 +149,8 @@ export default function(state = defaultUser, action) {
       return { ...state, cash: action.data.cash };
     case ALL_TRANSACTION:
       return { ...state, transactions: action.data };
+    case GET_COMPANIES:
+      return { ...state, companies: action.data };
     default:
       return state;
   }

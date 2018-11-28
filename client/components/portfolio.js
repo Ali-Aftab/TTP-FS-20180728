@@ -39,11 +39,14 @@ class Portfolio extends Component {
       stock,
       this.props.state.user.id
     );
-    if (result.data) {
+    if (result) {
       this.setState({
         cash: result.data.cash
       });
+      console.log(result);
+      window.alert(result.data.message);
     }
+    location.reload();
   }
 
   render() {
@@ -51,7 +54,7 @@ class Portfolio extends Component {
     return (
       <React.Fragment>
         <div className="floatleft">
-          <h2>Test</h2>
+          <h2>Your assets</h2>
         </div>
         <div className="floatright">
           <h2>You have ${this.state.cash} in cash!</h2>

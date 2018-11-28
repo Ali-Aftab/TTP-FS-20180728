@@ -16,6 +16,23 @@ router.get("/all/:id", async (req, res, next) => {
   }
 });
 
+router.post("/info", async (req, res, next) => {
+  try {
+    const companyComma = req.body.companies.join(",");
+    const url =
+      urlIEX + "/stock/market/batch?symbols=" + companyComma + "types=quote";
+    request.get(url, async function(error, response, body) {
+      if (error) {
+        console.log("error", error);
+      } else {
+        res.json({ body: body });
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/transactions/:id", async (req, res, next) => {
   try {
     const allTransactions = await Transaction.findAll({
@@ -23,7 +40,7 @@ router.get("/transactions/:id", async (req, res, next) => {
         userId: req.params.id
       }
     });
-    // console.log(allTransactions);
+
     res.json(allTransactions);
   } catch (error) {
     next(error);
@@ -41,6 +58,7 @@ router.post("/buy", async (req, res, next) => {
     request.get(oneStock, async function(error, response, body) {
       if (error) {
         console.log("error", error);
+        res.json("Unidentified Stock");
       } else {
         const price = Number(body);
         const amount = req.body.amount;
@@ -94,7 +112,11 @@ router.post("/buy", async (req, res, next) => {
             }
           });
           console.log(userInfo);
-          res.json({ price: body, cash: userInfo.cash });
+          res.json({
+            message: "Purchase successful!",
+            price: body,
+            cash: userInfo.cash
+          });
         } else {
           res.json({ message: "You do not have enough funds" });
         }
