@@ -27,17 +27,18 @@ class Transactions extends Component {
     }
     console.log(this);
     return (
-      <React.Fragment>
-        <h1>Transactions</h1>
+      <div className="float-center">
+        <h2>Transactions</h2>
         <table>
-          <tr>
-            <th>Name</th>
-            <th>Shares</th>
-            <th>Price per Stock</th>
-            <th>Date</th>
-            <th>buy or sell</th>
-          </tr>
           <tbody>
+            <tr>
+              <th className="table-header">Name</th>
+              <th className="table-header">Shares</th>
+              <th className="table-header">Price per Stock</th>
+              <th className="table-header">Date</th>
+              <th className="table-header">buy or sell</th>
+            </tr>
+
             {this.props.transactions
               ? this.props.transactions.map(t => {
                   return (
@@ -55,7 +56,7 @@ class Transactions extends Component {
               : ""}
           </tbody>
         </table>
-      </React.Fragment>
+      </div>
     );
   }
 }

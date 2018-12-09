@@ -1,9 +1,11 @@
 body {
   font-family: sans-serif;
+  color: #7b68ee;
 }
 
 a {
   text-decoration: none;
+  color: white;
 }
 
 label {
@@ -14,6 +16,24 @@ nav a {
   display: inline-block;
   margin: 1em;
 }
+button {
+  background-color: #7b68ee;
+  border: none;
+  color: white;
+  opacity: 0.6;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+button:hover {
+  opacity: 1;
+}
+button:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
 
 form div {
   margin: 1em;
@@ -23,6 +43,7 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 50%;
+  color: white;
 }
 
 td,
@@ -33,7 +54,14 @@ th {
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #c3baf7;
+}
+tr:nth-child(odd) {
+  background-color: #d7d1fa;
+}
+.table-header {
+  background-color: #8875f0;
+  color: white;
 }
 .floatleft {
   float: left;
@@ -42,4 +70,32 @@ tr:nth-child(even) {
 .floatright {
   float: right;
   width: 50%;
+}
+.float-center {
+  text-align: center;
+  background-color: white;
+}
+.white {
+  background-color: white;
+}
+.home {
+  text-align: center;
+  color: white;
+  background-color: #7b68ee;
+  background: #7b68ee;
+}
+.nav-purple {
+  background-color: #7b68ee;
+}
+.route-white {
+  background-color: white;
+}
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.grey {
+  color: gray;
 }

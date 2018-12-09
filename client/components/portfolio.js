@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllStock, buyNewStock, stockTimerStock } from "../store";
-import axios from "axios";
 import Assets from "./assets";
 
 class Portfolio extends Component {
@@ -10,23 +9,12 @@ class Portfolio extends Component {
     this.state = {
       amount: 0,
       stock: "",
-      cash: props.state.user.cash,
-      status: "no stocks"
+      cash: props.state.user.cash
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  async componentDidMount() {
-    const setState = this.setState.bind(this);
-    const { getStock } = await this.props;
-    const userId = this.props.state.user.id;
-    if (this.props && getStock && userId) {
-      this.timer = setInterval(function() {
-        getStock(userId);
-        this.setState({ status: "stocks!" });
-      }, 1000);
-    }
-  }
+
   handleChange(evt) {
     evt.preventDefault();
     const name = evt.target.name;
@@ -53,7 +41,6 @@ class Portfolio extends Component {
       this.setState({
         cash: result.data.cash
       });
-      console.log(result);
       window.alert(result.data.message);
     }
     location.reload();
@@ -61,10 +48,17 @@ class Portfolio extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div className="white">
         <div className="floatleft">
-          <h2>Your assets</h2>
-          <Assets state={this.props.state} />
+          {/* {this.props.state.user.stock ? ( */}
+          <React.Fragment>
+            <h2>Your assets</h2>
+
+            <Assets state={this.props.state} />
+          </React.Fragment>
+          {/* ) : (
+            <h2>Buy Some Stocks!</h2> */}
+          {/* )} */}
         </div>
         <div className="floatright">
           <h2>You have ${this.state.cash} in cash!</h2>
@@ -81,7 +75,7 @@ class Portfolio extends Component {
             <button type="submit">Buy</button>
           </form>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
@@ -99,9 +93,7 @@ const mapDispatch = dispatch => {
     handleSubmit(evt, amount, stock, id) {
       evt.preventDefault();
       dispatch(buyNewStock(amount, stock, id));
-    },
-    getStock: id => dispatch(getAllStock(id)),
-    timer: id => dispatch(stockTimerStock(id))
+    }
   };
 };
 export default connect(mapState, mapDispatch)(Portfolio);

@@ -1,15 +1,19 @@
-import React from 'react'
+import React from "react";
 
-import {Navbar} from './components'
-import Routes from './routes'
+import { Navbar } from "./components";
+import Routes from "./routes";
 
 const App = () => {
   return (
-    <div>
-      <Navbar />
-      <Routes />
-    </div>
-  )
-}
+    <React.Fragment>
+      <div className="nav-purple">
+        <Navbar classname="home" />
+      </div>
+      <div className="route-white">
+        <Routes />
+      </div>
+    </React.Fragment>
+  );
+};
 
-export default App
+export default App;

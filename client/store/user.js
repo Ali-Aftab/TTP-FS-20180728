@@ -68,37 +68,39 @@ export const getAllStock = userId => async dispatch => {
       const oneStock = res.data[i];
       companies.push(oneStock.name);
     }
-    const stockPortfolio = await axios.post(`/api/stock/info/`, {
-      companies: companies
-    });
-    const companyComma = companies.join(",");
-    const urlIEX = "https://api.iextrading.com/1.0";
-    const url =
-      urlIEX + "/stock/market/batch?symbols=" + companyComma + "&types=quote";
-    let stockInfo = {};
-    const what = await fetch(url)
-      .then(res => res.json())
-      .then(out => {
-        stockInfo = out;
-      })
-      .catch(err => {
-        throw err;
-      });
+    console.log(res.data);
+    if (companies !== []) {
+      console.log(companies);
+      const companyComma = companies.join(",");
+      const urlIEX = "https://api.iextrading.com/1.0";
+      const url =
+        urlIEX + "/stock/market/batch?symbols=" + companyComma + "&types=quote";
+      let stockInfo = {};
+      const what = await fetch(url)
+        .then(res => res.json())
+        .then(out => {
+          stockInfo = out;
+        })
+        .catch(err => {
+          throw err;
+        });
 
-    for (let i = 0; i < res.data.length; i++) {
-      let com = res.data[i];
-      stockInfo[com.name].amount = com.amount;
-      const latestPrice = Number(stockInfo[com.name].quote.latestPrice);
-      const open = Number(stockInfo[com.name].quote.open);
-      if (latestPrice > open) {
-        stockInfo[com.name].color = "green";
-      } else if (latestPrice < open) {
-        stockInfo[com.name].color = "red";
-      } else {
-        stockInfo[com.name].color = "black";
+      for (let i = 0; i < res.data.length; i++) {
+        let com = res.data[i];
+        stockInfo[com.name].amount = com.amount;
+        const latestPrice = Number(stockInfo[com.name].quote.latestPrice);
+        const open = Number(stockInfo[com.name].quote.open);
+        if (latestPrice > open) {
+          stockInfo[com.name].color = "green";
+        } else if (latestPrice < open) {
+          stockInfo[com.name].color = "red";
+        } else {
+          stockInfo[com.name].color = "black";
+        }
       }
+      dispatch(addCompanies(stockInfo));
     }
-    dispatch(addCompanies(stockInfo));
+    // }
   } catch (error) {
     console.error(error);
   }
