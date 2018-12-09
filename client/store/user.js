@@ -69,8 +69,7 @@ export const getAllStock = userId => async dispatch => {
       companies.push(oneStock.name);
     }
     console.log(res.data);
-    if (companies !== []) {
-      console.log(companies);
+    if (companies.length) {
       const companyComma = companies.join(",");
       const urlIEX = "https://api.iextrading.com/1.0";
       const url =
@@ -84,7 +83,6 @@ export const getAllStock = userId => async dispatch => {
         .catch(err => {
           throw err;
         });
-
       for (let i = 0; i < res.data.length; i++) {
         let com = res.data[i];
         stockInfo[com.name].amount = com.amount;
