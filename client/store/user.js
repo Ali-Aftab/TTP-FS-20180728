@@ -10,6 +10,7 @@ const GET_STOCK = "GET_STOCK";
 const BUY_STOCK = "BUY_STOCK";
 const ALL_TRANSACTION = "ALL_TRANSACTION";
 const GET_COMPANIES = "GET_COMPANIES";
+const STOCK_TIMER = "STOCK_TIMER";
 /**
  * INITIAL STATE
  */
@@ -17,7 +18,8 @@ const defaultUser = {
   userInfo: {},
   stock: [],
   transactions: [],
-  companies: []
+  companies: [],
+  timer: []
 };
 
 /**
@@ -29,6 +31,7 @@ const removeUser = () => ({ type: REMOVE_USER });
 const buyStock = data => ({ type: BUY_STOCK, data });
 const allTransaction = data => ({ type: ALL_TRANSACTION, data });
 const addCompanies = data => ({ type: GET_COMPANIES, data });
+const stockTimer = data => ({ type: STOCK_TIMER, data });
 
 /**
  * THUNK CREATORS
@@ -66,9 +69,28 @@ export const getAllStock = userId => async dispatch => {
     const stockPortfolio = await axios.post(`/api/stock/info/`, {
       companies: companies
     });
+
+    // await axios.post(
+    //   `/api/stock/info/`,
+    //   {
+    //     companies: companies
+    //   },
+    //   1000
+    // );
+    // });
     dispatch(addCompanies(stockPortfolio.data));
   } catch (error) {
     console.error(error);
+  }
+};
+export const stockTimerStock = userId => dispatch => {
+  try {
+    const timer = setInterval(function() {
+      getAllStock(userId);
+    }, 1000);
+    dispatch(stockTimer(timer));
+  } catch (error) {
+    console.log(error);
   }
 };
 export const allTransactions = userId => async dispatch => {
@@ -151,6 +173,8 @@ export default function(state = defaultUser, action) {
       return { ...state, transactions: action.data };
     case GET_COMPANIES:
       return { ...state, companies: action.data };
+    case STOCK_TIMER:
+      return { ...state, timer: action.data };
     default:
       return state;
   }

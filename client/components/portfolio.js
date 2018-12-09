@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllStock, buyNewStock } from "../store";
+import { getAllStock, buyNewStock, stockTimerStock } from "../store";
 import axios from "axios";
+import Assets from "./assets";
 
 class Portfolio extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Portfolio extends Component {
   }
   componentDidMount() {
     this.props.getStock(this.props.state.user.id);
+    this.props.timer(this.props.state.user.id);
   }
   handleChange(evt) {
     evt.preventDefault();
@@ -55,6 +57,7 @@ class Portfolio extends Component {
       <React.Fragment>
         <div className="floatleft">
           <h2>Your assets</h2>
+          <Assets state={this.props.state} />
         </div>
         <div className="floatright">
           <h2>You have ${this.state.cash} in cash!</h2>
@@ -90,7 +93,8 @@ const mapDispatch = dispatch => {
       evt.preventDefault();
       dispatch(buyNewStock(amount, stock, id));
     },
-    getStock: id => dispatch(getAllStock(id))
+    getStock: id => dispatch(getAllStock(id)),
+    timer: id => dispatch(stockTimerStock(id))
   };
 };
 export default connect(mapState, mapDispatch)(Portfolio);
