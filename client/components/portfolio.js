@@ -16,8 +16,15 @@ class Portfolio extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  componentDidMount() {
-    this.props.getStock(this.props.state.user.id);
+  async componentDidMount() {
+    const setState = this.setState.bind(this);
+    const { getStock } = await this.props;
+    if (this.props) {
+      this.timer = setInterval(function() {
+        getStock(this.props.state.user.id);
+        this.setState({ status: "stocks!" });
+      }, 1000);
+    }
   }
   handleChange(evt) {
     evt.preventDefault();
