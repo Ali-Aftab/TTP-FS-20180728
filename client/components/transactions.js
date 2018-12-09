@@ -35,21 +35,25 @@ class Transactions extends Component {
             <th>Shares</th>
             <th>Price per Stock</th>
             <th>Date</th>
+            <th>buy or sell</th>
           </tr>
-          {this.props.transactions
-            ? this.props.transactions.map(t => {
-                return (
-                  <tr key={t.id}>
-                    <th>{t.name}</th>
-                    <th>{t.amount}</th>
-                    <th>{t.price}</th>
-                    <th>
-                      <Moment date={t.date} format="MM-DD-YYYY -- HH:mm" />
-                    </th>
-                  </tr>
-                );
-              })
-            : ""}
+          <tbody>
+            {this.props.transactions
+              ? this.props.transactions.map(t => {
+                  return (
+                    <tr key={t.id}>
+                      <td>{t.name}</td>
+                      <td>{t.amount}</td>
+                      <td>{t.price}</td>
+                      <td>
+                        <Moment date={t.date} format="MM-DD-YYYY @ HH:mm" />
+                      </td>
+                      <td>{t.exchange}</td>
+                    </tr>
+                  );
+                })
+              : ""}
+          </tbody>
         </table>
       </React.Fragment>
     );

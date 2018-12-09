@@ -10,14 +10,14 @@ class Portfolio extends Component {
     this.state = {
       amount: 0,
       stock: "",
-      cash: props.state.user.cash
+      cash: props.state.user.cash,
+      status: "no stocks"
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
     this.props.getStock(this.props.state.user.id);
-    this.props.timer(this.props.state.user.id);
   }
   handleChange(evt) {
     evt.preventDefault();
@@ -52,7 +52,6 @@ class Portfolio extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <React.Fragment>
         <div className="floatleft">

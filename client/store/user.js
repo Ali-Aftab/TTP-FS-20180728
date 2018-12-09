@@ -1,5 +1,7 @@
 import axios from "axios";
 import history from "../history";
+import { IEXClient } from "iex-api";
+import * as _fetch from "isomorphic-fetch";
 
 /**
  * ACTION TYPES
@@ -69,16 +71,34 @@ export const getAllStock = userId => async dispatch => {
     const stockPortfolio = await axios.post(`/api/stock/info/`, {
       companies: companies
     });
+    const companyComma = companies.join(",");
+    const urlIEX = "https://api.iextrading.com/1.0";
+    const url =
+      urlIEX + "/stock/market/batch?symbols=" + companyComma + "&types=quote";
+    let stockInfo = {};
+    const what = await fetch(url)
+      .then(res => res.json())
+      .then(out => {
+        stockInfo = out;
+      })
+      .catch(err => {
+        throw err;
+      });
 
-    // await axios.post(
-    //   `/api/stock/info/`,
-    //   {
-    //     companies: companies
-    //   },
-    //   1000
-    // );
-    // });
-    dispatch(addCompanies(stockPortfolio.data));
+    for (let i = 0; i < res.data.length; i++) {
+      let com = res.data[i];
+      stockInfo[com.name].amount = com.amount;
+      const latestPrice = Number(stockInfo[com.name].quote.latestPrice);
+      const open = Number(stockInfo[com.name].quote.open);
+      if (latestPrice > open) {
+        stockInfo[com.name].color = "green";
+      } else if (latestPrice < open) {
+        stockInfo[com.name].color = "red";
+      } else {
+        stockInfo[com.name].color = "black";
+      }
+    }
+    dispatch(addCompanies(stockInfo));
   } catch (error) {
     console.error(error);
   }
@@ -87,7 +107,8 @@ export const stockTimerStock = userId => dispatch => {
   try {
     const timer = setInterval(function() {
       getAllStock(userId);
-    }, 1000);
+    }, 100000);
+
     dispatch(stockTimer(timer));
   } catch (error) {
     console.log(error);
