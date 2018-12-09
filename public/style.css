@@ -84,6 +84,9 @@ tr:nth-child(odd) {
   background-color: #7b68ee;
   background: #7b68ee;
 }
+.center {
+  text-align: center;
+}
 .nav-purple {
   background-color: #7b68ee;
 }

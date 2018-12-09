@@ -6,7 +6,7 @@ const AuthForm = props => {
   console.log(props);
   const { name, displayName, handleSubmit, error } = props;
   return (
-    <div>
+    <div className="center">
       <form onSubmit={handleSubmit} name={name}>
         {name === "signup" ? (
           <React.Fragment>
@@ -16,12 +16,14 @@ const AuthForm = props => {
               </label>
               <input name="firstName" type="text" />
             </div>
+            <br />
             <div>
               <label htmlFor="Last Name">
                 <small>Last Name</small>
               </label>
               <input name="lastName" type="text" />
             </div>
+            <br />
           </React.Fragment>
         ) : (
           ""
@@ -32,15 +34,18 @@ const AuthForm = props => {
           </label>
           <input name="email" type="text" />
         </div>
+        <br />
         <div>
           <label htmlFor="password">
             <small>Password</small>
           </label>
           <input name="password" type="password" />
         </div>
+        <br />
         <div>
           <button type="submit">{displayName}</button>
         </div>
+        <br />
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>

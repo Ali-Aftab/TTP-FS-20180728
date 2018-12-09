@@ -3,20 +3,7 @@ import { connect } from "react-redux";
 import { allTransactions } from "../store";
 import Moment from "react-moment";
 
-// import Table from "material-ui/Table";
-// import TableBody from "material-ui/TableBody";
-// import TableCell from "material-ui/TableCell";
-// import TableHead from "material-ui/TableHead";
-// import TableRow from "material-ui/TableRow";
-// import Paper from "material-ui/Paper";
-
 class Transactions extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {
-    //   transactions: []
-    // };
-  }
   componentDidMount() {
     const transactions = this.props.getTransactions(this.props.id);
   }
