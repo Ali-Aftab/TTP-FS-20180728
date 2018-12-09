@@ -19,9 +19,10 @@ class Portfolio extends Component {
   async componentDidMount() {
     const setState = this.setState.bind(this);
     const { getStock } = await this.props;
-    if (this.props) {
+    const userId = this.props.state.user.id;
+    if (this.props && getStock && userId) {
       this.timer = setInterval(function() {
-        getStock(this.props.state.user.id);
+        getStock(userId);
         this.setState({ status: "stocks!" });
       }, 1000);
     }
