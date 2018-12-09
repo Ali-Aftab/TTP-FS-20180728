@@ -68,7 +68,6 @@ export const getAllStock = userId => async dispatch => {
       const oneStock = res.data[i];
       companies.push(oneStock.name);
     }
-    console.log(res.data);
     if (companies.length) {
       const companyComma = companies.join(",");
       const urlIEX = "https://api.iextrading.com/1.0";

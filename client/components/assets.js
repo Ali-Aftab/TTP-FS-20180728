@@ -25,7 +25,6 @@ class Assets extends Component {
     const assetInfo = this.props.state.user.companies;
     let names = [];
     const notError = typeof assetInfo === "object";
-    console.log(assetInfo);
     if (assetInfo !== undefined) {
       names = Object.keys(assetInfo);
       return (
