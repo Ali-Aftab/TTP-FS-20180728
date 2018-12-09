@@ -19,12 +19,15 @@ router.get("/all/:id", async (req, res, next) => {
 router.post("/info", async (req, res, next) => {
   try {
     const companyComma = req.body.companies.join(",");
+
     const url =
-      urlIEX + "/stock/market/batch?symbols=" + companyComma + "types=quote";
+      urlIEX + "/stock/market/batch?symbols=" + companyComma + "&types=quote";
+    console.log(url);
     request.get(url, async function(error, response, body) {
       if (error) {
         console.log("error", error);
       } else {
+        console.log(body);
         res.json({ body: body });
       }
     });
