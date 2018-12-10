@@ -50,15 +50,10 @@ class Portfolio extends Component {
     return (
       <div className="white">
         <div className="floatleft">
-          {/* {this.props.state.user.stock ? ( */}
           <React.Fragment>
             <h2>Your assets</h2>
-
             <Assets state={this.props.state} />
           </React.Fragment>
-          {/* ) : (
-            <h2>Buy Some Stocks!</h2> */}
-          {/* )} */}
         </div>
         <div className="floatright">
           <h2>You have ${this.state.cash} in cash!</h2>
@@ -70,8 +65,9 @@ class Portfolio extends Component {
             <label htmlFor="Stock">
               <small>Stock</small>
             </label>
-            <br />
             <input name="stock" type="text" onChange={this.handleChange} />
+            <br />
+            <br />
             <button type="submit">Buy</button>
           </form>
         </div>

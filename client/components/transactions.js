@@ -16,7 +16,7 @@ class Transactions extends Component {
     return (
       <div className="float-center">
         <h2>Transactions</h2>
-        <table>
+        <table align="center">
           <tbody>
             <tr>
               <th className="table-header">Name</th>

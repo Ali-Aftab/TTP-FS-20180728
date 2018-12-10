@@ -1,6 +1,5 @@
 import axios from "axios";
 import history from "../history";
-import { IEXClient } from "iex-api";
 import * as _fetch from "isomorphic-fetch";
 
 /**

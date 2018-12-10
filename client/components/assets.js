@@ -17,25 +17,37 @@ class Assets extends Component {
     if (this.props && getStock && userId) {
       // this.timer = setInterval(function() {
       getStock(userId);
-      this.setState({ status: "stocks!" });
+      setState({ status: "stocks!" });
       // }, 1000);
+    }
+  }
+  componentWillUnmount() {
+    if (this.timer) {
+      clearInterval(this.timer);
     }
   }
   render() {
     const assetInfo = this.props.state.user.companies;
     let names = [];
-    const notError = typeof assetInfo === "object";
     if (assetInfo !== undefined) {
       names = Object.keys(assetInfo);
+      let cash = this.props.cash;
+      let total = cash;
+      for (let key in assetInfo) {
+        let amount = assetInfo[key].quote.latestPrice;
+        let price = assetInfo[key].amount;
+        total += Number(amount) * Number(price);
+      }
       return (
         <React.Fragment>
-          <table>
+          <table align="center">
             <tbody>
               <tr>
                 <th className="table-header">Name</th>
                 <th className="table-header">Shares</th>
                 <th className="table-header">Current Price</th>
                 <th className="table-header">Total Value</th>
+                <th className="table-header">Today's Change</th>
               </tr>
               {assetInfo
                 ? names.map(a => {
@@ -51,12 +63,14 @@ class Assets extends Component {
                           {Number(assetInfo[a].quote.latestPrice) *
                             Number(assetInfo[a].amount)}
                         </td>
+                        <td>{assetInfo[a].quote.change}</td>
                       </tr>
                     );
                   })
                 : ""}
             </tbody>
           </table>
+          <h3>Your Portfolio is worth ${total}</h3>
         </React.Fragment>
       );
     } else {

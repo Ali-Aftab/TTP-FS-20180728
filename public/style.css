@@ -62,14 +62,17 @@ tr:nth-child(odd) {
 .table-header {
   background-color: #8875f0;
   color: white;
+  text-align: center;
 }
 .floatleft {
   float: left;
   width: 50%;
+  text-align: center;
 }
 .floatright {
   float: right;
   width: 50%;
+  text-align: center;
 }
 .float-center {
   text-align: center;
