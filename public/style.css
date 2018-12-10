@@ -1,6 +1,12 @@
 body {
   font-family: sans-serif;
   color: #7b68ee;
+  margin: 0;
+  padding: 0;
+}
+html {
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -86,6 +92,7 @@ tr:nth-child(odd) {
   color: white;
   background-color: #7b68ee;
   background: #7b68ee;
+  display: block;
 }
 .center {
   text-align: center;
