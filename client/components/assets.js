@@ -15,10 +15,10 @@ class Assets extends Component {
     const { getStock } = await this.props;
     const userId = this.props.state.user.id;
     if (this.props && getStock && userId) {
-      // this.timer = setInterval(function() {
-      getStock(userId);
-      setState({ status: "stocks!" });
-      // }, 1000);
+      this.timer = setInterval(function() {
+        getStock(userId);
+        setState({ status: "stocks!" });
+      }, 1000);
     }
   }
   componentWillUnmount() {
@@ -46,8 +46,8 @@ class Assets extends Component {
                 <th className="table-header">Name</th>
                 <th className="table-header">Shares</th>
                 <th className="table-header">Current Price</th>
+                <th className="table-header">Today's Open Value</th>
                 <th className="table-header">Total Value</th>
-                <th className="table-header">Today's Change</th>
               </tr>
               {assetInfo
                 ? names.map(a => {
@@ -58,19 +58,21 @@ class Assets extends Component {
                       >
                         <td>{a}</td>
                         <td>{assetInfo[a].amount}</td>
-                        <td>{assetInfo[a].quote.latestPrice}</td>
+                        <td>{assetInfo[a].quote.latestPrice.toFixed(2)}</td>
+                        <td>{assetInfo[a].quote.open}</td>
                         <td>
-                          {Number(assetInfo[a].quote.latestPrice) *
-                            Number(assetInfo[a].amount)}
+                          {(
+                            Number(assetInfo[a].quote.latestPrice) *
+                            Number(assetInfo[a].amount)
+                          ).toFixed(2)}
                         </td>
-                        <td>{assetInfo[a].quote.change}</td>
                       </tr>
                     );
                   })
                 : ""}
             </tbody>
           </table>
-          <h3>Your Portfolio is worth ${total}</h3>
+          <h3>Your Portfolio is worth ${total.toFixed(2)}</h3>
         </React.Fragment>
       );
     } else {

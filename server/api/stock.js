@@ -16,32 +16,6 @@ router.get("/all/:id", async (req, res, next) => {
   }
 });
 
-router.post("/info", async (req, res, next) => {
-  try {
-    const companyComma = req.body.companies.join(",");
-    let obj = {};
-    for (let i = 0; i < req.body.companies.length; i++) {}
-    const url =
-      urlIEX + "/stock/market/batch?symbols=" + companyComma + "&types=quote";
-    console.log(url);
-    // fetch(url)
-    //   .then(res => res.json())
-    //   .catch(err => {
-    //     throw err;
-    //   });
-    request.get(url, async function(error, response, body) {
-      if (error) {
-        console.log("error", error);
-      } else {
-        console.log(typeof body);
-        res.json({ body });
-      }
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.get("/transactions/:id", async (req, res, next) => {
   try {
     const allTransactions = await Transaction.findAll({
