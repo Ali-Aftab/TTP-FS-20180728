@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllStock, buyNewStock, stockTimerStock } from "../store";
+import { buyNewStock } from "../store";
 import Assets from "./assets";
 
 class Portfolio extends Component {

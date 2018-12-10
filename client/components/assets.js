@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllStock, buyNewStock, stockTimerStock } from "../store";
+import { getAllStock } from "../store";
 
 class Assets extends Component {
   constructor(props) {
@@ -78,7 +78,7 @@ class Assets extends Component {
     } else {
       return (
         <React.Fragment>
-          <h1>No Stocks</h1>
+          <h1>Buy Some Stocks!</h1>
         </React.Fragment>
       );
     }
@@ -94,12 +94,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleSubmit(evt, amount, stock, id) {
-      evt.preventDefault();
-      dispatch(buyNewStock(amount, stock, id));
-    },
-    getStock: id => dispatch(getAllStock(id)),
-    timer: id => dispatch(stockTimerStock(id))
+    getStock: id => dispatch(getAllStock(id))
   };
 };
 export default connect(mapState, mapDispatch)(Assets);

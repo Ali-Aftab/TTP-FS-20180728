@@ -11,32 +11,21 @@ const GET_STOCK = "GET_STOCK";
 const BUY_STOCK = "BUY_STOCK";
 const ALL_TRANSACTION = "ALL_TRANSACTION";
 const GET_COMPANIES = "GET_COMPANIES";
-const STOCK_TIMER = "STOCK_TIMER";
-/**
- * INITIAL STATE
- */
+
 const defaultUser = {
   userInfo: {},
   stock: [],
   transactions: [],
-  companies: [],
-  timer: []
+  companies: []
 };
 
-/**
- * ACTION CREATORS
- */
 const getStock = data => ({ type: GET_STOCK, data });
 const getUser = user => ({ type: GET_USER, user });
 const removeUser = () => ({ type: REMOVE_USER });
 const buyStock = data => ({ type: BUY_STOCK, data });
 const allTransaction = data => ({ type: ALL_TRANSACTION, data });
 const addCompanies = data => ({ type: GET_COMPANIES, data });
-const stockTimer = data => ({ type: STOCK_TIMER, data });
 
-/**
- * THUNK CREATORS
- */
 export const me = () => async dispatch => {
   try {
     const res = await axios.get("/auth/me");
@@ -96,22 +85,11 @@ export const getAllStock = userId => async dispatch => {
       }
       dispatch(addCompanies(stockInfo));
     }
-    // }
   } catch (error) {
     console.error(error);
   }
 };
-export const stockTimerStock = userId => dispatch => {
-  try {
-    const timer = setInterval(function() {
-      getAllStock(userId);
-    }, 100000);
 
-    dispatch(stockTimer(timer));
-  } catch (error) {
-    console.log(error);
-  }
-};
 export const allTransactions = userId => async dispatch => {
   try {
     const res = await axios(`/api/stock/transactions/${userId}`);
@@ -175,9 +153,6 @@ export const logout = () => async dispatch => {
   }
 };
 
-/**
- * REDUCER
- */
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
@@ -192,8 +167,6 @@ export default function(state = defaultUser, action) {
       return { ...state, transactions: action.data };
     case GET_COMPANIES:
       return { ...state, companies: action.data };
-    case STOCK_TIMER:
-      return { ...state, timer: action.data };
     default:
       return state;
   }
