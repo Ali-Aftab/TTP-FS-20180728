@@ -50,10 +50,8 @@ class Portfolio extends Component {
     return (
       <div className="white">
         <div className="floatleft">
-          <React.Fragment>
-            <h2>Your assets</h2>
-            <Assets state={this.props.state} />
-          </React.Fragment>
+          <h2>Your assets</h2>
+          <Assets state={this.props.state} />
         </div>
         <div className="floatright">
           <h2>You have ${this.state.cash} in cash!</h2>
