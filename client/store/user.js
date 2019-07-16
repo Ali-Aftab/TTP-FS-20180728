@@ -2,6 +2,9 @@ import axios from "axios";
 import history from "../history";
 import * as _fetch from "isomorphic-fetch";
 
+//Public Token
+let token = "PLACE YOUR TOKEN HERE";
+
 /**
  * ACTION TYPES
  */
@@ -42,6 +45,7 @@ export const buyNewStock = (amount, stock, id) => async dispatch => {
       id
     });
     dispatch(buyStock(res.data));
+    console.log(res);
   } catch (error) {
     console.error(error);
   }
@@ -58,9 +62,11 @@ export const getAllStock = userId => async dispatch => {
     }
     if (companies.length) {
       const companyComma = companies.join(",");
-      const urlIEX = "https://api.iextrading.com/1.0";
       const url =
-        urlIEX + "/stock/market/batch?symbols=" + companyComma + "&types=quote";
+        "https://cloud.iexapis.com/stable/stock/market/batch?symbols=" +
+        companyComma +
+        "&types=quote,news,chart&range=1m&last=5&token=" +
+        token;
       let stockInfo = {};
       const what = await fetch(url)
         .then(res => res.json())

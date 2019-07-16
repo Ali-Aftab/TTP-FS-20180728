@@ -3,13 +3,12 @@ import { connect } from "react-redux";
 import { login, auth } from "../store";
 
 const AuthForm = props => {
-  console.log(props);
   const { name, displayName, handleSubmit, error } = props;
   return (
     <div className="center">
       <form onSubmit={handleSubmit} name={name}>
         {name === "signup" ? (
-          <React.Fragment>
+          <div>
             <div>
               <label htmlFor="First Name">
                 <small>First Name</small>
@@ -24,7 +23,7 @@ const AuthForm = props => {
               <input name="lastName" type="text" />
             </div>
             <br />
-          </React.Fragment>
+          </div>
         ) : (
           ""
         )}

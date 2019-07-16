@@ -38,20 +38,26 @@ class Portfolio extends Component {
       this.props.state.user.id
     );
     if (result) {
-      this.setState({
-        cash: result.data.cash
-      });
+      this.setState(
+        {
+          cash: result.data.cash
+        },
+        () => {
+          console.log(this.state);
+        }
+      );
       window.alert(result.data.message);
     }
-    location.reload();
   }
 
   render() {
     return (
       <div className="white">
         <div className="floatleft">
-          <h2>Your assets</h2>
-          <Assets state={this.props.state} />
+          <div>
+            <h2>Your assets</h2>
+            <Assets state={this.props.state} />
+          </div>
         </div>
         <div className="floatright">
           <h2>You have ${this.state.cash} in cash!</h2>

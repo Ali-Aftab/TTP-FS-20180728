@@ -12,7 +12,6 @@ class Transactions extends Component {
     if (this.props.state.user) {
       cash = this.props.state.user.cash;
     }
-    console.log(this);
     return (
       <div className="float-center">
         <h2>Transactions</h2>
@@ -25,7 +24,6 @@ class Transactions extends Component {
               <th className="table-header">Date</th>
               <th className="table-header">buy or sell</th>
             </tr>
-
             {this.props.transactions
               ? this.props.transactions.map(t => {
                   return (
